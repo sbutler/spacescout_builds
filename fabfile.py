@@ -42,7 +42,7 @@ def deploy_dev():
 def deploy_dev_server():
     local("virtualenv --no-site-packages server_proj/")
     with prefix(". server_proj/bin/activate"):
-        local("git clone git://github.com/sbutler/spotseeker_server.git server_proj/spotseeker_server")
+        local("[[ -e server_proj/spotseeker_server ]] || git clone git://github.com/sbutler/spotseeker_server.git server_proj/spotseeker_server")
         local("pip install -r server_proj/spotseeker_server/requirements.txt")
         local("cp configs/dev/server_local_settings.py server_proj/server_proj/local_settings.py")
         local("cp server_proj/server_proj/sample.wsgi.py server_proj/server_proj/wsgi.py")
@@ -55,7 +55,7 @@ def deploy_dev_server():
 def deploy_dev_admin():
     local("virtualenv --no-site-packages admin_proj/")
     with prefix(". admin_proj/bin/activate"):
-        local("git clone git://github.com/sbutler/spacescout_admin.git admin_proj/spacescout_admin")
+        local("[[ -e admin_proj/spacescout_admin ]] || git clone git://github.com/sbutler/spacescout_admin.git admin_proj/spacescout_admin")
         local("pip install -r admin_proj/spacescout_admin/requirements.txt")
         local("cp configs/dev/admin_local_settings.py admin_proj/admin_proj/local_settings.py")
         _replace_local_settings_for("admin_proj")
@@ -84,7 +84,7 @@ def deploy_dev_admin():
 def deploy_dev_docs():
     local("virtualenv --no-site-packages docs_proj/")
     with prefix(". docs_proj/bin/activate"):
-        local("git clone git://github.com/sbutler/spacescout_docs.git docs_proj/spacescout_docs")
+        local("[[ -e docs_proj/spacescout_docs ]] || git clone git://github.com/sbutler/spacescout_docs.git docs_proj/spacescout_docs")
         local("pip install -r docs_proj/spacescout_docs/requirements.txt")
         local("cp configs/dev/docs_local_settings.py docs_proj/docs_proj/local_settings.py")
         _replace_local_settings_for("docs_proj")
@@ -95,7 +95,7 @@ def deploy_dev_docs():
 def deploy_dev_web():
     local("virtualenv --no-site-packages web_proj/")
     with prefix(". web_proj/bin/activate"):
-        local("git clone git://github.com/sbutler/spacescout_web.git web_proj/spacescout_web")
+        local("[[ -e web_proj/spacescout_web ]] || git clone git://github.com/sbutler/spacescout_web.git web_proj/spacescout_web")
         local("pip install -r web_proj/spacescout_web/requirements.txt")
         local("cp configs/dev/web_local_settings.py web_proj/web_proj/local_settings.py")
         local("cp web_proj/web_proj/sample.wsgi.py web_proj/web_proj/wsgi.py")
