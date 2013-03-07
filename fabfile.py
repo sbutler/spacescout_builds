@@ -49,7 +49,7 @@ def deploy_dev_server():
         _replace_local_settings_for("server_proj")
         with prefix("cd server_proj/"):
             local("python manage.py syncdb")
-            local("python manage.py migrate")
+            # local("python manage.py migrate")
 
 
 def deploy_dev_admin():
