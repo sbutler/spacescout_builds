@@ -1,10 +1,12 @@
 from fabric.api import local, prefix, prompt
 from fabric.contrib.console import confirm
+from contextlib import nested
 import random
 import getpass
 import pexpect
 import sys
 import fabric.utils
+import os
 
 
 def deploy_dev():
@@ -40,9 +42,13 @@ def deploy_dev():
 
 
 def deploy_dev_server():
-    local("virtualenv --no-site-packages server_proj/")
-    with prefix(". server_proj/bin/activate"):
-        local("[[ -e server_proj/spotseeker_server ]] || git clone git://github.com/sbutler/spotseeker_server.git server_proj/spotseeker_server")
+    local("virtualenv --no-site-packages ./")
+    with prefix(". bin/activate"):
+        if os.path.exists("server_proj/spotseeker_server"):
+            with prefix("cd server_proj/spotseeker_server"):
+                local("git pull")
+        else:
+            local("git clone git://github.com/sbutler/spotseeker_server.git server_proj/spotseeker_server")
         local("pip install -r server_proj/spotseeker_server/requirements.txt")
         local("cp configs/dev/server_local_settings.py server_proj/server_proj/local_settings.py")
         local("cp server_proj/server_proj/sample.wsgi.py server_proj/server_proj/wsgi.py")
@@ -53,33 +59,19 @@ def deploy_dev_server():
 
 
 def deploy_dev_admin():
-    local("virtualenv --no-site-packages admin_proj/")
-    with prefix(". admin_proj/bin/activate"):
-        local("[[ -e admin_proj/spacescout_admin ]] || git clone git://github.com/sbutler/spacescout_admin.git admin_proj/spacescout_admin")
+    local("virtualenv --no-site-packages ./")
+    with prefix(". bin/activate"):
+        if os.path.exists("admin_proj/spacescout_admin"):
+            with prefix("cd admin_proj/spacescout_admin"):
+                local("git pull")
+        else:
+            local("git clone git://github.com/sbutler/spacescout_admin.git admin_proj/spacescout_admin")
         local("pip install -r admin_proj/spacescout_admin/requirements.txt")
         local("cp configs/dev/admin_local_settings.py admin_proj/admin_proj/local_settings.py")
         _replace_local_settings_for("admin_proj")
         with prefix("cd admin_proj/"):
             local("python manage.py syncdb")
-    if local("which curl", capture=True) != '' and not 'darwin' in local('uname', capture=True).lower():
-        with prefix("cd admin_proj/bin/"):
-            local("wget https://raw.github.com/chuwy/nodeenv/master/nodeenv.py")
-        install_node_js = confirm("I am about to install node.js for you.  It may take a long time, and it is possible to install it yourself.  Okay to proceed?")
-        if install_node_js:
-            with prefix(". admin_proj/bin/activate"):
-                with prefix("python admin_proj/bin/nodeenv.py -p"):
-                    local("npm install -g less")
-        else:
-            print('Skipping node.js install.  You must install it yourself for the admin app to work')
-    else:
-        if local("which curl", capture=True) == '':
-            no_nodeenv_reason = " don't have curl installed "
-        elif 'darwin' in local("uname", capture=True).lower():
-            no_nodeenv_reason = ' are on a Mac '
-        else:
-            no_nodeenv_reason = ' are special '
-        print("You" + no_nodeenv_reason + "so I can't install nodeenv.  You'll have to install node.js yourself.")
-
+    _install_nodejs()
 
 def deploy_dev_docs():
     local("virtualenv --no-site-packages docs_proj/")
@@ -93,33 +85,20 @@ def deploy_dev_docs():
 
 
 def deploy_dev_web():
-    local("virtualenv --no-site-packages web_proj/")
-    with prefix(". web_proj/bin/activate"):
-        local("[[ -e web_proj/spacescout_web ]] || git clone git://github.com/sbutler/spacescout_web.git web_proj/spacescout_web")
+    local("virtualenv --no-site-packages ./")
+    with prefix(". bin/activate"):
+        if os.path.exists("web_proj/spacescout_web"):
+            with prefix("cd web_proj/spacescout_web"):
+                local("git pull")
+        else:
+            local("git clone git://github.com/sbutler/spacescout_web.git web_proj/spacescout_web")
         local("pip install -r web_proj/spacescout_web/requirements.txt")
         local("cp configs/dev/web_local_settings.py web_proj/web_proj/local_settings.py")
         local("cp web_proj/web_proj/sample.wsgi.py web_proj/web_proj/wsgi.py")
         _replace_local_settings_for("web_proj")
         with prefix("cd web_proj/"):
             local("python manage.py syncdb")
-    if local("which curl", capture=True) != '' and not 'darwin' in local('uname', capture=True).lower():
-        with prefix("cd web_proj/bin/"):
-            local("wget https://raw.github.com/chuwy/nodeenv/master/nodeenv.py")
-        install_node_js = confirm("I am about to install node.js for you.  It may take a long time, and it is possible to install it yourself.  Okay to proceed?")
-        if install_node_js:
-            with prefix(". web_proj/bin/activate"):
-                with prefix("python web_proj/bin/nodeenv.py -p"):
-                    local("npm install -g less")
-        else:
-            print('Skipping node.js install.  You must install it yourself for the web app to work')
-    else:
-        if local("which curl", capture=True) == '':
-            no_nodeenv_reason = " don't have curl installed "
-        elif 'darwin' in local("uname", capture=True).lower():
-            no_nodeenv_reason = ' are on a Mac '
-        else:
-            no_nodeenv_reason = ' are special '
-        print("You" + no_nodeenv_reason + "so I can't install nodeenv.  You'll have to install node.js yourself.")
+    _install_nodejs()
 
 
 def start_server():
@@ -153,11 +132,31 @@ def clean_all():
         local('rm -rf docs_proj/spacescout_docs')
         local('rm -rf server_proj/spotseeker_server')
         local('rm -rf web_proj/spacescout_web')
-        for proj in ['admin_proj', 'docs_proj', 'server_proj', 'web_proj']:
-            local("rm -rf %s/bin" % proj)
-            local("rm -rf %s/include" % proj)
-            local("rm -rf %s/lib" % proj)
+        local("rm -rf bin")
+        local("rm -rf include")
+        local("rm -rf lib")
 
+
+def _install_nodejs():
+    if os.path.exists("bin/node"):
+        return
+
+    if local("which wget", capture=True) != '' and not 'darwin' in local('uname', capture=True).lower():
+        local("wget -O bin/nodeenv.py https://raw.github.com/chuwy/nodeenv/master/nodeenv.py")
+        install_node_js = confirm("I am about to install node.js for you.  It may take a long time, and it is possible to install it yourself.  Okay to proceed?")
+        if install_node_js:
+            with nested(prefix(". bin/activate"), prefix("python bin/nodeenv.py -p")):
+                local("npm install -g less")
+        else:
+            print('Skipping node.js install.  You must install it yourself for the web app to work')
+    else:
+        if local("which curl", capture=True) == '':
+            no_nodeenv_reason = " don't have curl installed "
+        elif 'darwin' in local("uname", capture=True).lower():
+            no_nodeenv_reason = ' are on a Mac '
+        else:
+            no_nodeenv_reason = ' are special '
+        print("You" + no_nodeenv_reason + "so I can't install nodeenv.  You'll have to install node.js yourself.")
 
 def _replace_local_settings_for(folder):
     secret_key = _generate_secret_key()
