@@ -16,7 +16,7 @@ framework.
 import os
 import site
 
-site.addsitedir('/path/to/spacescout_builds/server_proj/lib/python2.6/site-packages')
+site.addsitedir('/path/to/spacescout_builds/lib/python2.6/site-packages')
 site.addsitedir('/path/to/spacescout_builds/server_proj')
 
 #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "server_proj.settings")
