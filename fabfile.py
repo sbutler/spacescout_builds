@@ -8,6 +8,7 @@ import sys
 import fabric.utils
 import os
 
+git_repo_base = 'git://github.com/sbutler'
 
 def deploy_dev():
     info = _get_user_info()
@@ -48,7 +49,7 @@ def deploy_dev_server():
             with prefix("cd server_proj/spotseeker_server"):
                 local("git pull")
         else:
-            local("git clone git://github.com/sbutler/spotseeker_server.git server_proj/spotseeker_server")
+            local("git clone {0}/spotseeker_server.git server_proj/spotseeker_server".format(git_repo_base))
         local("pip install -r server_proj/spotseeker_server/requirements.txt")
         local("cp configs/dev/server_local_settings.py server_proj/server_proj/local_settings.py")
         local("cp server_proj/server_proj/sample.wsgi.py server_proj/server_proj/scripts/wsgi.py")
@@ -65,7 +66,7 @@ def deploy_dev_admin():
             with prefix("cd admin_proj/spacescout_admin"):
                 local("git pull")
         else:
-            local("git clone git://github.com/sbutler/spacescout_admin.git admin_proj/spacescout_admin")
+            local("git clone {0}/spacescout_admin.git admin_proj/spacescout_admin".format(git_repo_base))
         local("pip install -r admin_proj/spacescout_admin/requirements.txt")
         local("cp configs/dev/admin_local_settings.py admin_proj/admin_proj/local_settings.py")
         _replace_local_settings_for("admin_proj")
@@ -91,7 +92,7 @@ def deploy_dev_web():
             with prefix("cd web_proj/spacescout_web"):
                 local("git pull")
         else:
-            local("git clone git://github.com/sbutler/spacescout_web.git web_proj/spacescout_web")
+            local("git clone {0}/spacescout_web.git web_proj/spacescout_web".format(git_repo_base))
         local("pip install -r web_proj/spacescout_web/requirements.txt")
         local("cp configs/dev/web_local_settings.py web_proj/web_proj/local_settings.py")
         local("cp web_proj/web_proj/sample.wsgi.py web_proj/web_proj/scripts/wsgi.py")

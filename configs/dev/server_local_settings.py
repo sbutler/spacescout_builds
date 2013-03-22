@@ -32,6 +32,8 @@ DATABASES = {
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
 #TIME_ZONE = 'America/Chicago'
+USE_TZ = False
+TIME_ZONE = 'America/Chicago'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -44,3 +46,4 @@ MEDIA_URL = 'http://localhost:8000/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
+

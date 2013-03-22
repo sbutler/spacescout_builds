@@ -1,3 +1,3 @@
 #! /bin/sh
 cd web_proj
-bin/python manage.py runserver 0.0.0.0:8001
+../bin/python manage.py runserver 127.0.0.1:8001

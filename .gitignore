@@ -11,6 +11,7 @@ CACHE
 bin
 include
 lib
+src
 admin_proj/install.cfg
 admin_proj/local/
 admin_proj/share/

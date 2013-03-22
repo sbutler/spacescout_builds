@@ -23,26 +23,22 @@ DATABASES = {
     }
 }
 
+SITE_ID = 2
+
 SS_WEB_SERVER_HOST = 'http://127.0.0.1:8000'
 # Run ./manage.py create_consumer on the server and copy the key and secret below. You'll also need to go into the admin and make the oauth client "Trusted."
 SS_WEB_OAUTH_KEY = ''
 SS_WEB_OAUTH_SECRET = ''
 
 SS_LOCATIONS = {
-    'seattle': {
-        'NAME': 'Seattle Campus',
-        'CENTER_LATITUDE': '47.655003',
-        'CENTER_LONGITUDE': '-122.306864',
-        'ZOOM_LEVEL': '15',
-    },
-    'tacoma': {
-        'NAME': 'Tacoma Campus',
-        'CENTER_LATITUDE': '47.24473',
-        'CENTER_LONGITUDE': '-122.43855',
-        'ZOOM_LEVEL': '15',
-    }
+    'uiuc': {
+	    'NAME': 'Urbana-Champaign',
+	    'CENTER_LATITUDE': '40.107471',
+	    'CENTER_LONGITUDE': '-88.227081',
+	    'ZOOM_LEVEL': '16',
+	    }
 }
-SS_DEFAULT_LOCATION = 'seattle'
+SS_DEFAULT_LOCATION = 'uiuc'
 
 
 # Enable Google Analytics
@@ -63,7 +59,9 @@ CACHES = {
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-#TIME_ZONE = 'America/Chicago'
+USE_TZ = False
+TIME_ZONE = 'America/Chicago'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
+
