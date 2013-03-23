@@ -70,7 +70,10 @@ def deploy_dev_admin():
                 local("git pull")
         else:
             local("git clone {0}/spacescout_admin.git admin_proj/spacescout_admin".format(git_repo_base))
-        local("pip install -r admin_proj/spacescout_admin/requirements.txt")
+        if os.environ.get('ORACLE_HOME', ''):
+            local("pip install -r admin_proj/spacescout_admin/requirements-oracle.txt")
+        else:
+            local("pip install -r admin_proj/spacescout_admin/requirements.txt")
         local("cp configs/dev/admin_local_settings.py admin_proj/admin_proj/local_settings.py")
         _replace_local_settings_for("admin_proj")
         with prefix("cd admin_proj/"):

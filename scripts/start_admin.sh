@@ -1,3 +1,3 @@
 #! /bin/sh
 cd admin_proj
-bin/python manage.py runserver 0.0.0.0:8002
+../bin/python manage.py runserver 127.0.0.1:8002
