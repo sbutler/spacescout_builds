@@ -100,9 +100,9 @@ def deploy_dev_web():
         else:
             local("git clone {0}/spacescout_web.git web_proj/spacescout_web".format(git_repo_base))
         if os.environ.get('ORACLE_HOME', ''):
-            local("pip install -r server_proj/spotseeker_server/requirements-oracle.txt")
+            local("pip install -r web_proj/spacescout_web/requirements-oracle.txt")
         else:
-            local("pip install -r server_proj/spotseeker_server/requirements.txt")
+            local("pip install -r web_proj/spacescout_web/requirements.txt")
         local("cp configs/dev/web_local_settings.py web_proj/web_proj/local_settings.py")
         local("cp web_proj/web_proj/sample.wsgi.py web_proj/web_proj/scripts/wsgi.py")
         _replace_local_settings_for("web_proj")
