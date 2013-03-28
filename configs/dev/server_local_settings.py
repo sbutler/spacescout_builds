@@ -27,6 +27,15 @@ DATABASES = {
     }
 }
 
+LDAP_INFO = {
+    # LDAP Server
+    'url':'ldap.uiuc.edu',
+    # Search Root for finding people.
+    'person_ou':'ou=people,DC=UIUC,DC=EDU',
+    'user':'CN=...,DC=ad,DC=uillinois,DC=edu'
+    'password':
+}
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
