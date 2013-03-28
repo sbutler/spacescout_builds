@@ -28,12 +28,13 @@ DATABASES = {
 }
 
 LDAP_INFO = {
-    # LDAP Server
+    # Campus LDAP Server
     'url':'ldap.uiuc.edu',
     # Search Root for finding people.
     'person_ou':'ou=people,DC=UIUC,DC=EDU',
-    'user':'CN=...,DC=ad,DC=uillinois,DC=edu'
-    'password':
+# Campus LDAP Username and Password
+    'user':'CN=...,DC=ad,DC=uillinois,DC=edu',
+    'password':'',
 }
 
 # Local time zone for this installation. Choices can be found here:
@@ -46,7 +47,7 @@ TIME_ZONE = 'America/Chicago'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = '/home/delaport/projects/spacefinder_media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
