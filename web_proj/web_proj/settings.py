@@ -1,4 +1,5 @@
 # Django settings for web_proj project.
+from django.conf import global_settings
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -102,7 +103,7 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
 
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = global_settings.AUTHENTICATION_BACKENDS + (
     'django.contrib.auth.backends.RemoteUserBackend',
 )
 
@@ -158,7 +159,7 @@ INSTALLED_APPS = (
     'shibboleth',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'shibboleth.context_processors.login_link',
     'shibboleth.context_processors.logout_link',
 )
