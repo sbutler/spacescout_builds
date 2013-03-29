@@ -40,6 +40,8 @@ SS_LOCATIONS = {
 }
 SS_DEFAULT_LOCATION = 'uiuc'
 
+SHIB_LOGIN_URL = '/Shibboleth.sso/Login'
+SHIB_LOGOUT_URL = '/Shibbolet.sso/Logout'
 
 # Enable Google Analytics
 #GA_TRACKING_ID = 'UA-XXXXX-Y'
