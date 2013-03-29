@@ -102,6 +102,10 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
 
+AUTHENTICATION_BACKENDS += (
+    'django.contrib.auth.backends.RemoteUserBackend',
+)
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -115,6 +119,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'shibboleth.middleware.ShibbolethRemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'mobility.middleware.DetectMobileMiddleware',
@@ -150,6 +155,12 @@ INSTALLED_APPS = (
     'spacescout_web',
     'compressor',
     'templatetag_handlebars',
+    'shibboleth',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'shibboleth.context_processors.login_link',
+    'shibboleth.context_processors.logout_link',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -190,6 +201,13 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'spacescout-web'
     }
+}
+
+SHIBBOLETH_ATTRIBUTE_MAP = {
+   "Shibboleth-user": (True, "username"),,
+   "Shibboleth-givenName": (False, "first_name"),
+   "Shibboleth-sn": (False, "last_name"),
+   "Shibboleth-mail": (True, "email"),
 }
 
 try:
