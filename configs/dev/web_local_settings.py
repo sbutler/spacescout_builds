@@ -58,7 +58,7 @@ CACHES = {
 }
 
 SHIBBOLETH_ATTRIBUTE_MAP = {
-   "Shibboleth-eppn": (True, "username"),,
+   "Shibboleth-eppn": (True, "username"),
    "Shibboleth-givenName": (False, "first_name"),
    "Shibboleth-sn": (False, "last_name"),
    "Shibboleth-mail": (True, "email"),
