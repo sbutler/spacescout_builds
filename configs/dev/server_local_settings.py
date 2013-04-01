@@ -37,9 +37,10 @@ LDAP_INFO = {
     'password':'',
 }
 
-SPOTSEEKER_SERVER_SEARCH_FILTERS = [
-    'spotseeker_server.org_filters.uiuc_require_address',
-]
+SPOTSEEKER_SEARCH_FILTERS = (
+    'spotseeker_server.org_filters.uiuc_search.Filter',
+    'spotseeker_server.org_filters.uw_search.Filter',
+)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
