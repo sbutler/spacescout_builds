@@ -40,6 +40,10 @@ SS_LOCATIONS = {
 }
 SS_DEFAULT_LOCATION = 'uiuc'
 
+SPACESCOUT_SEARCH_FILTERS = (
+    'spacescout_web.org_filters.uiuc_search.Filter',
+)
+
 # Enable Google Analytics
 #GA_TRACKING_ID = 'UA-XXXXX-Y'
 
