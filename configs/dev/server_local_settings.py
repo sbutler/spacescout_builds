@@ -13,8 +13,8 @@ MANAGERS = ADMINS
 SPOTSEEKER_AUTH_MODULE = 'spotseeker_server.auth.all_ok'
 
 # Custom validation can be added by adding SpotForm and ExtendedInfoForm to org_forms and setting them here.
-#SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uw_spot.UWSpotForm'
-#SPOTSEEKER_EXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uw_spot.ExtendedInfoForm'
+SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uiuc_spot.UIUCSpotForm'
+SPOTSEEKER_SPOTEXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uiuc_spot.SpotExtendedInfoForm'
 
 DATABASES = {
     'default': {
@@ -38,7 +38,7 @@ LDAP_INFO = {
 }
 
 SPOTSEEKER_SEARCH_FILTERS = (
-    'spotseeker_server.org_filters.uiuc_search.Filter',
+#    'spotseeker_server.org_filters.uiuc_search.Filter',
     'spotseeker_server.org_filters.uw_search.Filter',
 )
 
