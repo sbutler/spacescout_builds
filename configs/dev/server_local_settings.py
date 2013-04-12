@@ -14,7 +14,7 @@ SPOTSEEKER_AUTH_MODULE = 'spotseeker_server.auth.all_ok'
 
 # Custom validation can be added by adding SpotForm and ExtendedInfoForm to org_forms and setting them here.
 SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uiuc_spot.UIUCSpotForm'
-SPOTSEEKER_SPOTEXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uiuc_spot.SpotExtendedInfoForm'
+SPOTSEEKER_SPOTEXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uiuc_spot.UIUCSpotExtendedInfoForm'
 
 DATABASES = {
     'default': {
