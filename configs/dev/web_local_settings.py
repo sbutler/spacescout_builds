@@ -59,12 +59,13 @@ CACHES = {
 }
 
 SHIBBOLETH_ATTRIBUTE_MAP = {
-   "Shibboleth-eppn": (True, "username"),
-   "Shibboleth-givenName": (False, "first_name"),
-   "Shibboleth-sn": (False, "last_name"),
-   "Shibboleth-mail": (True, "email"),
+   "eppn": (True, "username"),
+   "givenName": (False, "first_name"),
+   "sn": (False, "last_name"),
+   "mail": (True, "email"),
 }
 LOGIN_URL = '/Shibboleth.sso/Login'
+SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
