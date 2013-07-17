@@ -1,0 +1,9 @@
+.form-row .geoposition-map,
+.form-row .field-box:first-child {
+    margin-left: 10em;
+}
+
+.form-row .field-box {
+    width: 14em;
+}
+
