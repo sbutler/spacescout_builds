@@ -50,10 +50,11 @@ def deploy_dev_server():
                 local("git pull")
         else:
             local("git clone {0}/spotseeker_server.git server_proj/spotseeker_server".format(git_repo_base))
+        local("pip install -r server_proj/spotseeker_server/requirements.txt")
+        local("pip install -r server_proj/requirements.txt")
         if os.environ.get('ORACLE_HOME', ''):
-            local("pip install -r server_proj/spotseeker_server/requirements-oracle.txt")
+            local("pip install cx_Oracle")
         else:
-            local("pip install -r server_proj/spotseeker_server/requirements.txt")
         local("cp configs/dev/server_local_settings.py server_proj/server_proj/local_settings.py")
         local("cp server_proj/server_proj/sample.wsgi.py server_proj/server_proj/scripts/wsgi.py")
         _replace_local_settings_for("server_proj")
