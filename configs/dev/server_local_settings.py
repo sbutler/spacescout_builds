@@ -37,6 +37,16 @@ LDAP_INFO = {
     'password':'',
 }
 
+SS_LOCATIONS = {
+    'uiuc': {
+	    'NAME': 'Urbana-Champaign',
+	    'CENTER_LATITUDE': '40.107471',
+	    'CENTER_LONGITUDE': '-88.227081',
+	    'ZOOM_LEVEL': '16',
+	    }
+}
+SS_DEFAULT_LOCATION = 'uiuc'
+
 SPOTSEEKER_SEARCH_FILTERS = (
 #    'spotseeker_server.org_filters.uiuc_search.Filter',
     'spotseeker_server.org_filters.uw_search.Filter',
