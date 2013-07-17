@@ -63,6 +63,27 @@ def deploy_dev_server():
             # local("python manage.py migrate")
 
 
+def deploy_prod_server():
+    local("virtualenv --no-site-packages ./")
+    with prefix(". bin/activate"):
+        if os.path.exists("server_proj/spotseeker_server"):
+            with prefix("cd server_proj/spotseeker_server"):
+                local("git pull")
+        else:
+            local("git clone {0}/spotseeker_server.git server_proj/spotseeker_server".format(git_repo_base))
+        local("pip install -r server_proj/spotseeker_server/requirements.txt")
+        local("pip install -r server_proj/requirements.txt")
+        if os.environ.get('ORACLE_HOME', ''):
+            local("pip install cx_Oracle")
+        else:
+        local("cp configs/prod/server_local_settings.py server_proj/server_proj/local_settings.py")
+        local("cp server_proj/server_proj/sample.wsgi.py server_proj/server_proj/scripts/wsgi.py")
+        _replace_local_settings_for("server_proj")
+        with prefix("cd server_proj/"):
+            local("python manage.py syncdb")
+            # local("python manage.py migrate")
+
+
 def deploy_dev_admin():
     local("virtualenv --no-site-packages ./")
     with prefix(". bin/activate"):
