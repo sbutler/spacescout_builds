@@ -24,4 +24,5 @@ class UIUCSpot(Spot):
         proxy = True
         verbose_name = 'UIUC Spot'
         verbose_name_plural = 'UIUC Spots'
+        app_label = 'spotseeker_server'
 
