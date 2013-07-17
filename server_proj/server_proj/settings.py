@@ -133,6 +133,8 @@ INSTALLED_APPS = (
     # 'south',
     'spotseeker_server',
     'oauth_provider',
+    'uiuc_admin',
+    'geoposition',
 )
 
 # A sample logging configuration. The only tangible logging
