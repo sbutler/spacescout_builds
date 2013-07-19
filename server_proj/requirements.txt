@@ -1,3 +1,4 @@
+ipaddress
 python-ldap
 -e hg+https://bitbucket.org/stephen-butler/django-oauth-plus@oracle-fix#egg=django-oauth-plus
 -e git+https://github.com/sbutler/django-geoposition#egg=django-geoposition
