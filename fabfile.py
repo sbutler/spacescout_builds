@@ -54,7 +54,6 @@ def deploy_dev_server():
         local("pip install -r server_proj/requirements.txt")
         if os.environ.get('ORACLE_HOME', ''):
             local("pip install cx_Oracle")
-        else:
         local("cp configs/dev/server_local_settings.py server_proj/server_proj/local_settings.py")
         local("cp server_proj/server_proj/sample.wsgi.py server_proj/server_proj/scripts/wsgi.py")
         _replace_local_settings_for("server_proj")
@@ -75,7 +74,6 @@ def deploy_prod_server():
         local("pip install -r server_proj/requirements.txt")
         if os.environ.get('ORACLE_HOME', ''):
             local("pip install cx_Oracle")
-        else:
         local("cp configs/prod/server_local_settings.py server_proj/server_proj/local_settings.py")
         local("cp server_proj/server_proj/sample.wsgi.py server_proj/server_proj/scripts/wsgi.py")
         _replace_local_settings_for("server_proj")
