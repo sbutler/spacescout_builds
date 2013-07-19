@@ -43,7 +43,7 @@ def deploy_dev():
 
 
 def deploy_dev_server():
-    local("virtualenv --no-site-packages ./")
+    local("[[ ! -e bin/activate ]] && virtualenv --no-site-packages ./")
     with prefix(". bin/activate"):
         if os.path.exists("server_proj/spotseeker_server"):
             with prefix("cd server_proj/spotseeker_server"):
@@ -64,7 +64,7 @@ def deploy_dev_server():
 
 
 def deploy_prod_server():
-    local("virtualenv --no-site-packages ./")
+    local("[[ ! -e bin/activate ]] && virtualenv --no-site-packages ./")
     with prefix(". bin/activate"):
         if os.path.exists("server_proj/spotseeker_server"):
             with prefix("cd server_proj/spotseeker_server"):
@@ -85,7 +85,7 @@ def deploy_prod_server():
 
 
 def deploy_dev_admin():
-    local("virtualenv --no-site-packages ./")
+    local("[[ ! -e bin/activate ]] && virtualenv --no-site-packages ./")
     with prefix(". bin/activate"):
         if os.path.exists("admin_proj/spacescout_admin"):
             with prefix("cd admin_proj/spacescout_admin"):
@@ -114,7 +114,7 @@ def deploy_dev_docs():
 
 
 def deploy_dev_web():
-    local("virtualenv --no-site-packages ./")
+    local("[[ ! -e bin/activate ]] && virtualenv --no-site-packages ./")
     with prefix(". bin/activate"):
         if os.path.exists("web_proj/spacescout_web"):
             with prefix("cd web_proj/spacescout_web"):
