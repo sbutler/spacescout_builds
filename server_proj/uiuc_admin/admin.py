@@ -23,7 +23,7 @@ from spotseeker_server.admin import SpotAdmin
 from spotseeker_server.forms.spot import SpotForm, SpotExtendedInfoForm
 from spotseeker_server.models import SpotAvailableHours, SpotImage
 
-from .models import UIUCSpot
+from .models import UIUCSpot, HostAuthRule
 
 SPOT_BOOLEAN_FIELDS = (
     'has_whiteboards',
@@ -264,3 +264,14 @@ class UIUCSpotAdmin(SpotAdmin):
 
 admin.site.register(UIUCSpot, UIUCSpotAdmin)
 
+class HostAuthRuleAdmin(admin.ModelAdmin):
+    readonly_fields = ('entry_type',)
+    list_filter = (
+            'kind',
+            )
+    list_display = (
+            '__unicode__',
+            'entry_type',
+            )
+
+admin.site.register(HostAuthRule, HostAuthRuleAdmin)
