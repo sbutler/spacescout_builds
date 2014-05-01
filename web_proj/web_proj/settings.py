@@ -1,5 +1,4 @@
 # Django settings for web_proj project.
-from django.conf import global_settings
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -9,6 +8,13 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+AUTHENTICATION_BACKENDS = (
+    'shibboleth.backends.ShibbolethRemoteUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_SSL', 'on')
 
 DATABASES = {
     'default': {
@@ -31,6 +37,8 @@ SS_LOCATIONS = {
 }
 SS_DEFAULT_LOCATION = 'seattle'
 
+SHOW_IOS_SMART_BANNER = False
+
 # This is the list of zoom levels for which the spaces are clustered by building on the map.  An empty list means no building clustering
 SS_BUILDING_CLUSTERING_ZOOM_LEVELS = []
 
@@ -38,6 +46,13 @@ SS_BUILDING_CLUSTERING_ZOOM_LEVELS = []
 # together on the map when not clustering by building
 SS_DISTANCE_CLUSTERING_RATIO = .1
 
+SHIBBOLETH_ATTRIBUTE_MAP = {
+    'HTTP_UID':         (True, 'username'),
+    'HTTP_MAIL':        (True, 'email'),
+    'HTTP_ISMEMBEROF':  (True, 'groups[]'),
+}
+LOGIN_URL = '/Shibboleth.sso/Login'
+SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -103,15 +118,28 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
 
-AUTHENTICATION_BACKENDS = global_settings.AUTHENTICATION_BACKENDS + (
-    'django.contrib.auth.backends.RemoteUserBackend',
-)
-
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     #'django.template.loaders.eggs.Loader',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'spacescout_web.context_processors.show_ios_smart_banner',
+    'spacescout_web.context_processors.less_not_compiled',
+    'spacescout_web.context_processors.is_mobile',
+    'spacescout_web.context_processors.ga_tracking_id',
+    'spacescout_web.context_processors.gmaps_api_key',
+    'shibboleth.context_processors.login_link',
+    'shibboleth.context_processors.logout_link',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -121,7 +149,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'shibboleth.middleware.ShibbolethRemoteUserMiddleware',
+    'spacescout_web.middleware.shibboleth_sso.ShibbolethRemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'mobility.middleware.DetectMobileMiddleware',
@@ -135,7 +163,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'web_proj.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'web_proj.scripts.wsgi.application'
+WSGI_APPLICATION = 'web_proj.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -154,15 +182,10 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'shibboleth',
     'spacescout_web',
     'compressor',
     'templatetag_handlebars',
-    'shibboleth',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'shibboleth.context_processors.login_link',
-    'shibboleth.context_processors.logout_link',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -203,13 +226,6 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'spacescout-web'
     }
-}
-
-SHIBBOLETH_ATTRIBUTE_MAP = {
-   "Shibboleth-user": (True, "username"),
-   "Shibboleth-givenName": (False, "first_name"),
-   "Shibboleth-sn": (False, "last_name"),
-   "Shibboleth-mail": (True, "email"),
 }
 
 try:

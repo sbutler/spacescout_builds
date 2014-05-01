@@ -166,6 +166,8 @@ LOGGING = {
     }
 }
 
+JSON_PRETTY_PRINT = True
+
 try:
     from local_settings import *
 except ImportError:

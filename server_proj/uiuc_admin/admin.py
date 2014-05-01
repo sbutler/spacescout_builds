@@ -20,10 +20,13 @@ from django.contrib import admin
 from geoposition import Geoposition
 from geoposition.forms import GeopositionField
 from spotseeker_server.admin import SpotAdmin
-from spotseeker_server.forms.spot import SpotForm, SpotExtendedInfoForm
+from spotseeker_server.forms.spot import SpotForm as SSSpotForm, SpotExtendedInfoForm as SSSpotExtendedInfoForm
 from spotseeker_server.models import SpotAvailableHours, SpotImage
 
 from .models import UIUCSpot, HostAuthRule
+
+SpotForm = SSSpotForm.implementation()
+SpotExtendedInfoForm = SSSpotExtendedInfoForm.implementation()
 
 SPOT_BOOLEAN_FIELDS = (
     'has_whiteboards',
