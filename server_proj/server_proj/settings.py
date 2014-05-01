@@ -24,7 +24,8 @@ DATABASES = {
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Los_Angeles'
+USE_TZ = False
+TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -167,6 +168,15 @@ LOGGING = {
 }
 
 JSON_PRETTY_PRINT = True
+
+# Custom validation can be added by adding SpotForm and ExtendedInfoForm to org_forms and setting them here.
+SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uiuc_spot.UIUCSpotForm'
+SPOTSEEKER_SPOTEXTENDEDINFO_FORM = 'spotseeker_server.org_forms.uiuc_spot.UIUCSpotExtendedInfoForm'
+
+SPOTSEEKER_SEARCH_FILTERS = (
+    'spotseeker_server.org_filters.uiuc_search.Filter',
+    'spotseeker_server.org_filters.uw_search.Filter',
+)
 
 try:
     from local_settings import *

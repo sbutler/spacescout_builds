@@ -9,6 +9,11 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+FEEDBACK_EMAIL_RECIPIENT = (
+    'illinispaces+feedback@ics.illinois.edu',
+)
+DEFAULT_FROM_EMAIL = 'illinispaces@ics.illinois.edu'
+
 AUTHENTICATION_BACKENDS = (
     'shibboleth.backends.ShibbolethRemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -28,14 +33,14 @@ DATABASES = {
 }
 
 SS_LOCATIONS = {
-    'seattle': {
-        'NAME': 'Seattle Campus',
-        'CENTER_LATITUDE': '47.655003',
-        'CENTER_LONGITUDE': '-122.306864',
-        'ZOOM_LEVEL': '15',
-    },
+    'uiuc': {
+            'NAME': 'Urbana-Champaign',
+            'CENTER_LATITUDE': '40.107471',
+            'CENTER_LONGITUDE': '-88.227081',
+            'ZOOM_LEVEL': '16',
+            }
 }
-SS_DEFAULT_LOCATION = 'seattle'
+SS_DEFAULT_LOCATION = 'uiuc'
 
 SHOW_IOS_SMART_BANNER = False
 
@@ -52,7 +57,12 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
     'HTTP_ISMEMBEROF':  (True, 'groups[]'),
 }
 LOGIN_URL = '/Shibboleth.sso/Login'
-SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout'
+SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout?target=%s'
+
+SPACESCOUT_SEARCH_FILTERS = (
+    'spacescout_web.org_filters.uiuc_search.Filter',
+)
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -61,7 +71,8 @@ SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout'
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Los_Angeles'
+USE_TZ = False
+TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
