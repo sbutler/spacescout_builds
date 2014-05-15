@@ -50,6 +50,7 @@ SPOT_STRING_FIELDS = (
     'uiuc_require_edutype',
     'food_allowed',
     'access_notes',
+    'reservation_url',
     'reservation_notes',
     'location_description',
     )
@@ -121,6 +122,10 @@ class UIUCSpotForm(SpotForm):
             )
     access_notes = forms.CharField(required=False,
             help_text='Access notes to display on the space detailed view.'
+            )
+    reservation_url = forms.URLField(required=False,
+            label='Reservation URL',
+            help_text='URL that takes people to the reservation system.'
             )
     reservation_notes = forms.CharField(required=False,
             help_text='Reservation notes to display on the space detailed view.'
@@ -208,7 +213,7 @@ class UIUCSpotAdmin(SpotAdmin):
                 }
             ),
             ('Notes', {
-                'fields': ('access_notes', 'reservation_notes', 'location_description',)
+                'fields': ('access_notes', 'reservation_url', 'reservation_notes', 'location_description',)
                 }
             ),
         )
