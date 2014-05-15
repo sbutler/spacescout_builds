@@ -20,6 +20,18 @@ DATABASES = {
     }
 }
 
+# Our locations copied from web_proj.settings. Needed to support the
+# uiuc_admin model with its map.
+SS_LOCATIONS = {
+    'uiuc': {
+            'NAME': 'Urbana-Champaign',
+            'CENTER_LATITUDE': '40.107471',
+            'CENTER_LONGITUDE': '-88.227081',
+            'ZOOM_LEVEL': '16',
+            }
+}
+SS_DEFAULT_LOCATION = 'uiuc'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
