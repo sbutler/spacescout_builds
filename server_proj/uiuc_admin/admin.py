@@ -22,6 +22,7 @@ from geoposition.forms import GeopositionField
 from spotseeker_server.admin import SpotAdmin
 from spotseeker_server.forms.spot import SpotForm as SSSpotForm, SpotExtendedInfoForm as SSSpotExtendedInfoForm
 from spotseeker_server.models import SpotAvailableHours, SpotImage
+import re
 
 from .models import UIUCSpot, HostAuthRule
 
@@ -179,6 +180,15 @@ class UIUCSpotForm(SpotForm):
             self.fields[field].widget.attrs['class'] = 'vTextField'
             if field in spot_ei:
                 self.fields[field].initial = spot_ei[field].value
+
+    def clean_uiuc_require_address(self):
+        pattern = self.cleaned_data['uiuc_require_address']
+        if pattern:
+            try:
+                re.compile(pattern)
+            except:
+                raise forms.ValidationError("Value must be a regular expression")
+        return pattern
 
     class Meta:
         model = UIUCSpot
