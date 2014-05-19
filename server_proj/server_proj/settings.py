@@ -185,7 +185,7 @@ LOGGING = {
     }
 }
 
-JSON_PRETTY_PRINT = True
+JSON_PRETTY_PRINT = DEBUG
 
 # Custom validation can be added by adding SpotForm and ExtendedInfoForm to org_forms and setting them here.
 SPOTSEEKER_SPOT_FORM = 'spotseeker_server.org_forms.uiuc_spot.UIUCSpotForm'
