@@ -9,6 +9,13 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+AUTHENTICATION_BACKENDS = (
+    'shibboleth.backends.ShibbolethRemoteUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_SSL', 'on')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -102,6 +109,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'spotseeker_server.middleware.shibboleth_sso.ShibbolethRemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -140,6 +148,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+    'shibboleth',
     # 'south',
     'spotseeker_server',
     'oauth_provider',
@@ -186,6 +195,15 @@ SPOTSEEKER_SEARCH_FILTERS = (
     'spotseeker_server.org_filters.uiuc_search.Filter',
     'spotseeker_server.org_filters.uw_search.Filter',
 )
+
+# Some Shibboleth configuration. This maps attributes from Shibboleth into
+# the attributes on the user in Django.
+SHIBBOLETH_ATTRIBUTE_MAP = {
+    'HTTP_UID':          (True, 'username'),
+    'HTTP_MAIL':        (True, 'email'),
+}
+
+LOGIN_URL = '/Shibboleth.sso/Login'
 
 try:
     from local_settings import *
