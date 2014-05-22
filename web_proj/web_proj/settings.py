@@ -54,7 +54,6 @@ SS_DISTANCE_CLUSTERING_RATIO = .1
 SHIBBOLETH_ATTRIBUTE_MAP = {
     'HTTP_UID':         (True, 'username'),
     'HTTP_MAIL':        (True, 'email'),
-    'HTTP_ISMEMBEROF':  (True, 'groups[]'),
 }
 LOGIN_URL = '/Shibboleth.sso/Login'
 SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout?target=%s'
