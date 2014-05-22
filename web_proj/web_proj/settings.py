@@ -63,6 +63,8 @@ SPACESCOUT_SEARCH_FILTERS = (
     'spacescout_web.org_filters.uiuc_search.Filter',
 )
 
+GMAPS_API_KEY = 'AIzaSyB6eqWhhGQWvtZt_Hm9lfe9jJHKzpmOQXo'
+GA_TRACKING_ID = 'UA-51282505-1'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
