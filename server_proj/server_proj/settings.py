@@ -204,6 +204,7 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
 }
 
 LOGIN_URL = '/Shibboleth.sso/Login'
+SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout?target=%s'
 
 try:
     from local_settings import *
