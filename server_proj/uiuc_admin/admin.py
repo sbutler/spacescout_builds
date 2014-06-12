@@ -254,7 +254,7 @@ class UIUCSpotAdmin(SpotAdmin):
         for field in SPOT_INTEGER_FIELDS:
             if form.cleaned_data[field] > 0:
                 eiform = SpotExtendedInfoForm(
-                    {'spot':spot.pl, 'key':field, 'value':form.cleaned_data[field]},
+                    {'spot':spot.pk, 'key':field, 'value':form.cleaned_data[field]},
                     instance=spot_ei.get(field)
                     )
                 if eiform.is_valid():
