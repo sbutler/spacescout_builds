@@ -93,7 +93,7 @@ class UIUCSpotAvailableHoursInline(admin.TabularInline):
 class UIUCSpotImageInline(admin.StackedInline):
     """ Inline images form for the admin interface """
     model = SpotImage
-    exclude = ('content_type', 'width', 'height', 'etag')
+    exclude = ('content_type', 'width', 'height', 'etag', 'upload_user', 'upload_application')
     extra = 1
 
 class UIUCSpotForm(SpotForm):
@@ -280,6 +280,16 @@ class UIUCSpotAdmin(SpotAdmin):
             else:
                 if field in spot_ei:
                     spot_ei[field].delete()
+
+    def save_formset(self, request, form, formset, change):
+        """ Add user and app info to SpotImages """
+        instances = formset.save(commit=False)
+        for instance in instances:
+            if isinstance(instance, SpotImage):
+                instance.upload_user = request.user.username
+                instance.upload_application = 'UIUC Admin'
+            instance.save()
+        formset.save_m2m()
 
     class Media:
         css = {
