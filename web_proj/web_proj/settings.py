@@ -35,9 +35,9 @@ DATABASES = {
 SS_LOCATIONS = {
     'uiuc': {
             'NAME': 'Urbana-Champaign',
-            'CENTER_LATITUDE': '40.107471',
-            'CENTER_LONGITUDE': '-88.227081',
-            'ZOOM_LEVEL': '16',
+            'CENTER_LATITUDE': '40.10527180599617',
+            'CENTER_LONGITUDE': '-88.22699516931152',
+            'ZOOM_LEVEL': '15',
             }
 }
 SS_DEFAULT_LOCATION = 'uiuc'
