@@ -230,12 +230,18 @@ class UIUCSpotAdmin(SpotAdmin):
     inlines = [UIUCSpotAvailableHoursInline, UIUCSpotImageInline]
 
     def save_model(self, request, spot, form, change):
-        """ Pull out our custom fields and save them separately """
         spot.latitude = form.cleaned_data['coordinates'][0]
         spot.longitude = form.cleaned_data['coordinates'][1]
 
         super(UIUCSpotAdmin, self).save_model(request, spot, form, change)
 
+    def save_related(self, request, form, formsets, change):
+        """ Pull out our custom fields and save them as extended info """
+        super(UIUCSpotAdmin, self).save_related(request, form, formsets, change)
+
+        spot = form.instance
+        if not spot:
+            return
         spot_ei = dict((ei.key, ei) for ei in spot.spotextendedinfo_set.all())
 
         # Update the boolean extended info fields
@@ -244,7 +250,7 @@ class UIUCSpotAdmin(SpotAdmin):
                 eiform = SpotExtendedInfoForm(
                     {'spot':spot.pk, 'key':field, 'value':'true'},
                     instance=spot_ei.get(field)
-                    )
+                )
                 if eiform.is_valid():
                     eiform.save()
             else:
@@ -256,7 +262,7 @@ class UIUCSpotAdmin(SpotAdmin):
                 eiform = SpotExtendedInfoForm(
                     {'spot':spot.pk, 'key':field, 'value':form.cleaned_data[field]},
                     instance=spot_ei.get(field)
-                    )
+                )
                 if eiform.is_valid():
                     eiform.save()
             else:
@@ -268,7 +274,7 @@ class UIUCSpotAdmin(SpotAdmin):
                 eiform = SpotExtendedInfoForm(
                     {'spot':spot.pk, 'key':field, 'value':form.cleaned_data[field]},
                     instance=spot_ei.get(field)
-                    )
+                )
                 if eiform.is_valid():
                     eiform.save()
             else:
