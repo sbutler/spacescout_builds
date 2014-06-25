@@ -31,11 +31,12 @@ DATABASES = {
 # uiuc_admin model with its map.
 SS_LOCATIONS = {
     'uiuc': {
-            'NAME': 'Urbana-Champaign',
-            'CENTER_LATITUDE': '40.10527180599617',
-            'CENTER_LONGITUDE': '-88.22699516931152',
-            'ZOOM_LEVEL': '15',
-            }
+        'NAME': 'Urbana-Champaign',
+        'CENTER_LATITUDE': '40.10527180599617',
+        'CENTER_LONGITUDE': '-88.22699516931152',
+        'ZOOM_LEVEL': '15',
+        'DISTANCE': '1400',
+    }
 }
 SS_DEFAULT_LOCATION = 'uiuc'
 
