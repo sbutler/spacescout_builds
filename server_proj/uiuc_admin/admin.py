@@ -33,9 +33,9 @@ SPOT_BOOLEAN_FIELDS = (
     'has_whiteboards',
     'has_outlets',
     'has_printing',
-    'has_scanners',
+    'has_scanner',
     'has_displays',
-    'has_projectors',
+    'has_projector',
     'has_computers',
     'has_natural_light',
     'reservable',
@@ -105,9 +105,9 @@ class UIUCSpotForm(SpotForm):
     has_whiteboards = forms.BooleanField(required=False)
     has_outlets = forms.BooleanField(required=False)
     has_printing = forms.BooleanField(required=False)
-    has_scanners = forms.BooleanField(required=False)
+    has_scanner = forms.BooleanField(required=False)
     has_displays = forms.BooleanField(required=False)
-    has_projectors = forms.BooleanField(required=False)
+    has_projector = forms.BooleanField(required=False)
     has_computers = forms.BooleanField(required=False)
     has_natural_light = forms.BooleanField(required=False)
     reservable = forms.BooleanField(required=False)
@@ -217,7 +217,7 @@ class UIUCSpotAdmin(SpotAdmin):
                     'uiuc_require_edutype',
                     'food_allowed',
                     ('has_whiteboards', 'has_outlets', 'has_printing'),
-                    ('has_scanners', 'has_displays', 'has_projectors'),
+                    ('has_scanner', 'has_displays', 'has_projector'),
                     ('has_computers', 'has_natural_light', 'reservable'),
                     )
                 }
