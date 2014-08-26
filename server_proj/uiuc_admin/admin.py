@@ -121,15 +121,15 @@ class UIUCSpotForm(SpotForm):
             label='Restrict by Type',
             help_text='Matches the uiucEduType field of people allowed to use this space'
             )
-    access_notes = forms.CharField(required=False,
-            help_text='Access notes to display on the space detailed view.'
+    access_notes = forms.CharField(widget=forms.Textarea, required=False,
+            help_text='Access notes to display on the space detailed view. Limited HTML is allowed.'
             )
     reservation_url = forms.URLField(required=False,
             label='Reservation URL',
             help_text='URL that takes people to the reservation system.'
             )
-    reservation_notes = forms.CharField(required=False,
-            help_text='Reservation notes to display on the space detailed view.'
+    reservation_notes = forms.CharField(widget=forms.Textarea, required=False,
+            help_text='Reservation notes to display on the space detailed view. Limited HTML is allowed.'
             )
     location_description = forms.CharField(required=False,
             help_text='Human readable location description.'
