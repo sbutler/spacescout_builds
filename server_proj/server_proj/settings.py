@@ -9,6 +9,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DEFAULT_FROM_EMAIL = 'illinispaces@ics.illinois.edu'
+SPACESCOUT_SUGGEST_FROM = 'illinispaces+suggest@ics.illinois.edu'
+
 AUTHENTICATION_BACKENDS = (
     'shibboleth.backends.ShibbolethRemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -39,6 +42,9 @@ SS_LOCATIONS = {
     }
 }
 SS_DEFAULT_LOCATION = 'uiuc'
+
+# Values can be one of 'all_ok' or 'oauth'. If using 'oauth', client applications will need an oauth key/secret pair.
+SPOTSEEKER_AUTH_MODULE = 'spotseeker_server.auth.oauth'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
