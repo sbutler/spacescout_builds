@@ -16,7 +16,7 @@
 from django.db import models
 import ipaddress
 
-from spotseeker_server.models import Spot
+from spotseeker_server.models import Spot, SpaceReview
 
 class UIUCSpot(Spot):
     """
@@ -27,6 +27,17 @@ class UIUCSpot(Spot):
         proxy = True
         verbose_name = 'UIUC Spot'
         verbose_name_plural = 'UIUC Spots'
+        app_label = 'spotseeker_server'
+
+class UIUCSpaceReview(SpaceReview):
+    """
+    Proxy model for a SpaceReview so that we can register
+    with the admin interface twice.
+    """
+    class Meta:
+        proxy = True
+        verbose_name = 'UIUC Spot Review'
+        verbose_name_plural = 'UIUC Spot Reviews'
         app_label = 'spotseeker_server'
 
 class HostAuthRule(models.Model):

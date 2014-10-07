@@ -16,15 +16,23 @@
 from django import forms
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.sites.models import Site
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
 
 from geoposition import Geoposition
 from geoposition.forms import GeopositionField
+import logging
 from spotseeker_server.admin import SpotAdmin
 from spotseeker_server.forms.spot import SpotForm as SSSpotForm, SpotExtendedInfoForm as SSSpotExtendedInfoForm
-from spotseeker_server.models import SpotAvailableHours, SpotImage
+from spotseeker_server.models import SpotAvailableHours, SpotImage, SpaceReview
 import re
 
-from .models import UIUCSpot, HostAuthRule
+from .models import UIUCSpot, UIUCSpaceReview, HostAuthRule
+
+logger = logging.getLogger(__name__)
 
 SpotForm = SSSpotForm.implementation()
 SpotExtendedInfoForm = SSSpotExtendedInfoForm.implementation()
@@ -85,6 +93,54 @@ CAMPUSES = (
     ('uic', 'Chicago'),
     ('uis', 'Springfield'),
     )
+
+
+@receiver(pre_save, sender=SpaceReview)
+def pre_save_space_review(sender, instance, raw, **kwargs):
+    """ Copy the original review to the review field if new. """
+    if raw or instance.pk:
+        return
+
+    if not instance.review:
+        instance.review = instance.original_review
+
+@receiver(post_save, sender=SpaceReview)
+def post_save_space_review(sender, instance, created, raw, **kwargs):
+    """
+    Send an email when a new review has been saved to the
+    space admins.
+    """
+    if raw or not created:
+        return
+
+    try:
+        to_addr = instance.space.manager
+        if not to_addr:
+            to_addr = getattr(settings, 'SPACESCOUT_REVIEW_MANAGERS', None)
+
+        # Split the addresses apart if we have multiple
+        recipient_list = []
+        if to_addr:
+            for addr in re.split(r'\s*,\s*', to_addr):
+                if addr:
+                    recipient_list.append(addr)
+
+        if len(recipient_list):
+            send_mail(
+                subject='New Space Review: {0}'.format(instance.space),
+                message='A new space review has been submitted.\n\nSpace: {0}\nReviewer: {1}\nRating: {2}\n\nVisit https://{3}{4} to moderate the review.'.format(
+                    instance.space,
+                    instance.reviewer,
+                    instance.rating,
+                    Site.objects.get(pk=settings.SITE_ID).domain,
+                    reverse('admin:spotseeker_server_uiucspacereview_change', args=(instance.pk,)),
+                ),
+                recipient_list=recipient_list,
+                from_email=getattr(settings, 'SPACESCOUT_REVIEW_MANAGERS', None),
+            )
+    except:
+        logger.exception("Unable to notify managers of new space review {0}".format(instance.pk))
+
 
 class UIUCSpotAvailableHoursInline(admin.TabularInline):
     """ Inline hours form for the admin interface """
@@ -194,6 +250,19 @@ class UIUCSpotForm(SpotForm):
         model = UIUCSpot
         exclude = ('latitude', 'longitude', 'etag',)
 
+class UIUCSpaceReviewForm(forms.ModelForm):
+    """
+    Override some form fields from the default admin form.
+    """
+    class Meta:
+        model = UIUCSpaceReview
+        widgets = {
+            'review': forms.Textarea(),
+            'original_review': forms.Textarea(),
+        }
+
+
+
 class UIUCSpotAdmin(SpotAdmin):
     """
     Admin model that uses the admin form and saves the extended information
@@ -298,6 +367,49 @@ class UIUCSpotAdmin(SpotAdmin):
 
 admin.site.register(UIUCSpot, UIUCSpotAdmin)
 
+class UIUCSpaceReviewAdmin(admin.ModelAdmin):
+    """
+    Admin model that uses the admin form and saves the space reviews
+    properly.
+    """
+    form = UIUCSpaceReviewForm
+    readonly_fields = (
+        'space',
+        'reviewer',
+        'published_by',
+        'original_review',
+        'rating',
+        'date_published',
+    )
+    list_display = (
+        'space',
+        'reviewer',
+        'rating',
+        'is_published',
+        'date_published',
+    )
+    ordering = ('-date_published',)
+    fieldsets = (
+        ('General', {
+            'fields': (('space', 'reviewer'), ('published_by', 'date_published')),
+        }),
+        ('Information', {
+            'fields': ('rating', 'original_review', 'review', ('is_published', 'is_deleted')),
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        """ Do some custom actions around saving. """
+        from spotseeker_server.views.reviews import update_review
+
+        update_review(obj, request.user, data={
+            'review': form.cleaned_data['review'],
+            'publish': form.cleaned_data['is_published'],
+            'delete': form.cleaned_data['is_deleted'],
+        })
+
+admin.site.register(UIUCSpaceReview, UIUCSpaceReviewAdmin)
+    
 class HostAuthRuleAdmin(admin.ModelAdmin):
     readonly_fields = ('entry_type',)
     list_filter = (

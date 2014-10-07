@@ -11,6 +11,7 @@ MANAGERS = ADMINS
 
 DEFAULT_FROM_EMAIL = 'illinispaces@ics.illinois.edu'
 SPACESCOUT_SUGGEST_FROM = 'illinispaces+suggest@ics.illinois.edu'
+SPACESCOUT_REVIEW_MANAGERS = 'illinispaces+reviews@ics.illinois.edu'
 
 AUTHENTICATION_BACKENDS = (
     'shibboleth.backends.ShibbolethRemoteUserBackend',
