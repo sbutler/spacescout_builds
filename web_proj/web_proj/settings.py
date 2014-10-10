@@ -60,7 +60,6 @@ LOGIN_URL = '/Shibboleth.sso/Login'
 SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout?target=%s'
 
 SPACESCOUT_SEARCH_FILTERS = (
-    'spacescout_web.org_filters.uiuc_search.Filter',
 )
 
 GMAPS_API_KEY = 'AIzaSyB6eqWhhGQWvtZt_Hm9lfe9jJHKzpmOQXo'
