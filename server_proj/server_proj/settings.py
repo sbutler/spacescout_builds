@@ -3,6 +3,9 @@
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+OAUTH_AUTHORIZE_VIEW = 'spotseeker_server.views.oauth.authorize'
+OAUTH_CALLBACK_VIEW = 'spotseeker_server.views.oauth.callback'
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
