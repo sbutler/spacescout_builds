@@ -1,3 +1,4 @@
 # Customizations not yet in upstream
 -e git+https://github.com/sbutler/django-shibboleth-remoteuser#egg=django-shibboleth-remoteuser-0.3.1
 gunicorn
+nodeenv

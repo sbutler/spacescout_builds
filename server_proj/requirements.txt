@@ -2,6 +2,7 @@ ipaddress
 python-ldap
 -e git+https://github.com/sbutler/django-geoposition#egg=django-geoposition
 # Customizations not yet in upstream
+python-dateutil
 -e git+https://github.com/sbutler/django-shibboleth-remoteuser#egg=django-shibboleth-remoteuser-0.3.1
 bleach
 gunicorn
