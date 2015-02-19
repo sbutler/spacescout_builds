@@ -56,7 +56,8 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
     'HTTP_UID':         (True, 'username'),
     'HTTP_MAIL':        (True, 'email'),
 }
-LOGIN_URL = '/Shibboleth.sso/Login'
+LOGIN_URL = '/shib/login'
+SHIBBOLETH_LOGIN_URL = '/Shibboleth.sso/Login?target=%s'
 SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout?target=%s'
 
 SPACESCOUT_SEARCH_FILTERS = (
@@ -147,8 +148,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'spacescout_web.context_processors.is_mobile',
     'spacescout_web.context_processors.ga_tracking_id',
     'spacescout_web.context_processors.gmaps_api_key',
-    'shibboleth.context_processors.login_link',
-    'shibboleth.context_processors.logout_link',
 )
 
 MIDDLEWARE_CLASSES = (

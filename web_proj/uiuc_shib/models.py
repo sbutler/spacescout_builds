@@ -1,4 +1,4 @@
-""" Copyright 2015 University of Illinois Board of Trustees
+""" Copyright 2013 University of Illinois Board of Trustees
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -12,16 +12,4 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 """
-from django.conf.urls import patterns, include, url
-from django.conf import settings
 
-# Uncomment the next two lines to enable the admin:
-from django.contrib import admin
-admin.autodiscover()
-
-from .views import LoginView, LogoutView
-
-urlpatterns = patterns('',
-    url(r'^login$', LoginView.as_view()),
-    url(r'^logout$', LogoutView.as_view()),
-)
