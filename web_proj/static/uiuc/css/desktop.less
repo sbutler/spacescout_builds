@@ -1,0 +1,223 @@
+@uiuc_blue_dark: #003C7D;
+@uiuc_blue: #6E8BBF;
+@uiuc_blue_light: #6E8BBF;
+@uiuc_orange_dark: #EF8A1C;
+@uiuc_orange: #F47F24;
+
+#nav {
+
+    .spacescout-header {
+
+        .logo-container {
+
+            .logo {
+                height: 104px;
+                line-height: 104px;
+                width: 187px;
+
+                background-image: url('../img/IlliniSpaces-logo.png');
+                background-size: 187px 100px;
+            }
+
+        }
+
+    }
+}
+
+#filter_container {
+    top: 140px;
+
+    #filter_block {
+        background-color: white;
+        min-height: 0;
+
+        .inner-column {
+            width: 25%;
+        }
+
+        #view_results_button,
+        #cancel_results_button {
+            float: right;
+        }
+    }
+}
+
+#map_canvas {
+    float: right;
+
+    .space-detail-container {
+
+        .space-detail {
+
+            .space-detail-inner {
+
+                .space-detail-header {
+
+                    .space-detail-name {
+                        color: @uiuc_blue_dark;
+                    }
+                }
+
+                .space-image-map-buttons {
+
+                    #carouselControl.active span {
+                        background-image: url('/static/img/uiuc_gallery_active.png');
+                    }
+
+                    #mapControl.active span {
+                        background-image: url('/static/img/uiuc_locate_active.png');
+                    }
+                }
+
+                .space-detail-body {
+
+                    .space-detail-body-inner {
+
+                        .image-container {
+
+                            .carousel-nav {
+
+                                li a.active {
+                                    color: @uiuc_blue_dark;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .space-ratings-and-reviews {
+
+                    .write-a-review {
+                        color: @uiuc_blue;
+                    }
+
+                    .space-reviews-content {
+
+                        .space-reviews-review {
+
+                            .space-review-header {
+
+                                span {
+
+                                    i {
+                                        color: @uiuc_blue_dark;
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    .space-review-compose {
+
+                        #space-review-submit {
+                            background-color: @uiuc_blue_dark;
+                        }
+
+                        #space-review-cancel {
+                            color: @uiuc_blue;
+                        }
+
+                    }
+
+                }
+
+                .space-detail-report {
+
+                    a, a:visited {
+                        color: @uiuc_blue;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#info_list {
+    float: left;
+    border-left: none;
+    border-right: solid 1px #d6d6d6;
+
+    #info_items {
+
+        ol {
+
+            li ol {
+
+                li {
+
+                    .space-detail-list-item {
+
+                        .space-detail-name {
+                            padding-left: 12px;
+                            text-indent: -10px;
+                        }
+
+                        .space-detail-type-label {
+                            padding-left: 12px;
+                            text-indent: -10px;
+                        }
+                    }
+                }
+            }
+
+            li.selected {
+                background: @uiuc_blue_dark url('/static/img/uiuc_list_item_selected.png') top repeat-x;
+                color: white;
+
+                button {
+                    color: white;
+                }
+            }
+        }
+
+    }
+}
+
+@media screen and (min-width: 1024px) {
+
+    #map_canvas {
+
+        .space-detail-container {
+
+            .space-detail {
+
+                .space-detail-inner {
+
+                    .space-detail-header {
+
+                        .space-actions {
+
+                            .space-stars {
+
+                                i {
+                                    color: @uiuc_blue_dark;
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+.favorites-header {
+    background-color: @uiuc_blue;
+
+    span {
+        border-bottom-color: @uiuc_blue;
+    }
+}
+
