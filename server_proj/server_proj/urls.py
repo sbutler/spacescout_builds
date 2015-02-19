@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 
     # This allows 3-legged oauth
     url(r'^oauth/', include('oauth_provider.urls')),
+    url(r'^shib/', include('uiuc_shib.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
