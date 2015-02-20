@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+    url(r'^uiuc/', include('uiuc.urls')),
     url(r'', include('spacescout_web.urls')),
 )
 
@@ -28,8 +29,3 @@ if settings.DEBUG:
         (r'^404/$', 'spacescout_web.views.error.page_not_found'),
         (r'^500/$', 'django.views.defaults.server_error'),
     )
-
-urlpatterns += patterns('',
-    url(r'^shib/', include('shibboleth.urls', namespace='shibboleth')),
-)
-
