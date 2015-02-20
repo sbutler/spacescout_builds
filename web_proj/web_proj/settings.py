@@ -194,6 +194,7 @@ INSTALLED_APPS = (
     'spacescout_web',
     'compressor',
     'templatetag_handlebars',
+    'uiuc',
 )
 
 # A sample logging configuration. The only tangible logging

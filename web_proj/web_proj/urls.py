@@ -16,7 +16,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^shib/', include('uiuc_shib.urls')),
+    url(r'^uiuc/', include('uiuc.urls')),
     url(r'', include('spacescout_web.urls')),
 )
 
