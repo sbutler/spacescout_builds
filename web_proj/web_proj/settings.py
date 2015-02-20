@@ -10,7 +10,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 FEEDBACK_EMAIL_RECIPIENT = (
-    'illinispaces+feedback@ics.illinois.edu',
+    'illinispaces-support@lists.illinois.edu',
 )
 DEFAULT_FROM_EMAIL = 'illinispaces@ics.illinois.edu'
 

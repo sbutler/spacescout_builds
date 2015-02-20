@@ -10,8 +10,8 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DEFAULT_FROM_EMAIL = 'illinispaces@ics.illinois.edu'
-SPACESCOUT_SUGGEST_FROM = 'illinispaces+suggest@ics.illinois.edu'
-SPACESCOUT_REVIEW_MANAGERS = 'illinispaces+reviews@ics.illinois.edu'
+SPACESCOUT_SUGGEST_FROM = 'illinispaces-support@lists.illinois.edu'
+SPACESCOUT_REVIEW_MANAGERS = 'illinispaces-support@lists.illinois.edu'
 
 AUTHENTICATION_BACKENDS = (
     'shibboleth.backends.ShibbolethRemoteUserBackend',
@@ -157,7 +157,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'shibboleth',
-    'south',
+    #'south',
     'spotseeker_server',
     'oauth_provider',
     'uiuc_admin',
