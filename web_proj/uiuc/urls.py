@@ -19,9 +19,15 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+from .sitemaps import SpotSitemap
 from .views import LoginView, LogoutView
 
 urlpatterns = patterns('',
     url(r'^login$', LoginView.as_view()),
     url(r'^logout$', LogoutView.as_view()),
+
+    url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {
+        'sitemaps': {'spots': SpotSitemap},
+        'template_name': 'uiuc/sitemap.xml',
+    }),
 )
