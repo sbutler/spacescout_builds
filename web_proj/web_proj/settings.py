@@ -56,7 +56,7 @@ SHIBBOLETH_ATTRIBUTE_MAP = {
     'HTTP_UID':         (True, 'username'),
     'HTTP_MAIL':        (True, 'email'),
 }
-LOGIN_URL = '/shib/login'
+LOGIN_URL = '/uiuc/login'
 SHIBBOLETH_LOGIN_URL = '/Shibboleth.sso/Login?target=%s'
 SHIBBOLETH_LOGOUT_URL = '/Shibboleth.sso/Logout?target=%s'
 
