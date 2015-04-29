@@ -63,6 +63,8 @@ class SpotSitemap(Sitemap):
                 image_info = {
                     'image': image,
                     'location': image_loc,
+                    'caption': self.__get('image_caption', item, image),
+                    'title': self.__get('image_title', item, image),
                 }
                 images.append(image_info)
 
@@ -95,3 +97,9 @@ class SpotSitemap(Sitemap):
             'image_id': image['id'],
             'thumb_width': 300,
         })
+
+    def image_caption(self, spot, image):
+        return spot['name']
+
+    def image_title(self, spot, image):
+        return spot['name']

@@ -5,16 +5,18 @@
 {% for url in urlset %}
   <url>
     <loc>{{ url.location }}</loc>
+    {% if url.lastmod %}<lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>{% endif %}
+    {% if url.changefreq %}<changefreq>{{ url.changefreq }}</changefreq>{% endif %}
+    {% if url.priority %}<priority>{{ url.priority }}</priority>{% endif %}
     {% if url.images %}
         {% for image in url.images %}
             <image:image>
                 <image:loc>{{ image.location }}</image:loc>
+		{% if image.caption %}<image:caption>{{ image.caption }}</image:caption>{% endif %}
+		{% if image.title %}<image:title>{{ image.title }}</image:title>{% endif %}
             </image:image>
         {% endfor %}
     {% endif %}
-    {% if url.lastmod %}<lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>{% endif %}
-    {% if url.changefreq %}<changefreq>{{ url.changefreq }}</changefreq>{% endif %}
-    {% if url.priority %}<priority>{{ url.priority }}</priority>{% endif %}
    </url>
 {% endfor %}
 {% endspaceless %}
