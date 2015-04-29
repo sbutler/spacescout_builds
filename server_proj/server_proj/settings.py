@@ -160,7 +160,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'shibboleth',
-    #'south',
+    'south',
     'spotseeker_server',
     'oauth_provider',
     'uiuc_admin',
