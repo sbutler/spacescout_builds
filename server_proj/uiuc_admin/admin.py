@@ -58,10 +58,12 @@ SPOT_STRING_FIELDS = (
     'uiuc_require_address',
     'uiuc_require_edutype',
     'food_allowed',
+    'noise_level',
     'access_notes',
     'reservation_url',
     'reservation_notes',
     'location_description',
+    'mail_address',
     )
 
 UIUC_EDU_CHOICES = (
@@ -86,6 +88,15 @@ FOOD_ALLOWED = (
     ('none', 'No food allowed'),
     ('covered_drink', 'Covered drinks only'),
     ('any', 'All food allowed'),
+    )
+
+NOISE_LEVEL = (
+    ('', ''),
+    ('silent', 'Silent'),
+    ('quiet', 'Quiet (Low hum)'),
+    ('moderate', 'Moderate (Chatter)'),
+    ('loud', 'Loud'),
+    ('variable', 'Variable'),
     )
 
 CAMPUSES = (
@@ -188,10 +199,14 @@ class UIUCSpotForm(SpotForm):
             help_text='Reservation notes to display on the space detailed view. Limited HTML is allowed.'
             )
     location_description = forms.CharField(required=False,
-            help_text='Human readable location description.'
+            help_text='Human readable location description that will be displayed on the results list.'
+            )
+    mail_address = forms.CharField(required=False,
+            help_text='Mail address that will be displayed on the details page.'
             )
     campus = forms.ChoiceField(required=True, choices=CAMPUSES)
     food_allowed = forms.ChoiceField(required=False, choices=FOOD_ALLOWED)
+    noise_level = forms.ChoiceField(required=False, choices=NOISE_LEVEL)
 
     def __init__(self, *args, **kwargs):
         """
@@ -275,7 +290,7 @@ class UIUCSpotAdmin(SpotAdmin):
                 }
             ),
             ('Location', {
-                'fields': ('campus', 'building_name', 'floor', 'room_number', 'coordinates',)
+                'fields': ('campus', 'building_name', 'floor', 'room_number', 'mail_address', 'coordinates',)
                 }
             ),
             ('Features', {
@@ -285,6 +300,7 @@ class UIUCSpotAdmin(SpotAdmin):
                     'uiuc_require_address',
                     'uiuc_require_edutype',
                     'food_allowed',
+                    'noise_level',
                     ('has_whiteboards', 'has_outlets', 'has_printing'),
                     ('has_scanner', 'has_displays', 'has_projector'),
                     ('has_computers', 'has_natural_light', 'reservable'),
@@ -297,6 +313,7 @@ class UIUCSpotAdmin(SpotAdmin):
             ),
         )
     inlines = [UIUCSpotAvailableHoursInline, UIUCSpotImageInline]
+    ordering = ('name',)
 
     def save_model(self, request, spot, form, change):
         spot.latitude = form.cleaned_data['coordinates'][0]
@@ -409,7 +426,7 @@ class UIUCSpaceReviewAdmin(admin.ModelAdmin):
         })
 
 admin.site.register(UIUCSpaceReview, UIUCSpaceReviewAdmin)
-    
+
 class HostAuthRuleAdmin(admin.ModelAdmin):
     readonly_fields = ('entry_type',)
     list_filter = (
